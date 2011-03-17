@@ -1,0 +1,18 @@
+* Under developing *
+Every http server is so heavy. I just need a server can be started in 1 min from downloading.
+The initial goal is need some testing tool for my working on intalio project.
+
+Usage:
+1. checkout source code
+2. make by
+> make
+3. run by
+bin/server -p <port>
+
+done.
+
+This project is still under development and currently only tested on MAC OS 10.6
+
+
+
+ 
