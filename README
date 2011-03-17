@@ -3,7 +3,7 @@
 Every http server is so heavy. I just need a server can be started in 1 min from downloading.
 The initial goal is need some testing tool for my working on intalio project.
 
-This server will only support CGI and CS(c script -  http://)
+This server will only support CGI and C Script(https://github.com/jackieju/mse)
 
 Usage:
 1. checkout source code
