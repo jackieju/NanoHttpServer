@@ -3,6 +3,8 @@
 Every http server is so heavy. I just need a server can be started in 1 min from downloading.
 The initial goal is need some testing tool for my working on intalio project.
 
+This server will only support CGI and CS(c script -  http://)
+
 Usage:
 1. checkout source code
 git clone git@github.com:jackieju/SimpleHttpServer.git
@@ -19,5 +21,6 @@ done.
 This project is still under development and currently only tested on MAC OS 10.6
 Developed by os-independent c/c++
 
-
- 
+History:
+20110317
+Create and finish TCP layer( socket layer) programming.
