@@ -1,9 +1,14 @@
 * Under developing *
+
 Every http server is so heavy. I just need a server can be started in 1 min from downloading.
 The initial goal is need some testing tool for my working on intalio project.
 
 Usage:
 1. checkout source code
+git clone git@github.com:jackieju/SimpleHttpServer.git
+# checkout the source code for symbol link clib and os
+git clone git@github.com:jackieju/mse.git 
+
 2. make by
 > make
 3. run by
@@ -12,7 +17,7 @@ bin/server -p <port>
 done.
 
 This project is still under development and currently only tested on MAC OS 10.6
-
+Developed by os-independent c/c++
 
 
  
