@@ -1,4 +1,7 @@
 #include "AbstractServer.h"
+/*
+ * 	NOTICE: port must > 999
+ */
 bool AbstractServer::start(int port){
 	LOG1p("create server socket from port %d", port);
 	int server_socket =OSMakeServerTCPSocket(port);
@@ -32,7 +35,8 @@ socklen_t addrlen;
 #endif
        		 continue;
    		}
-		REQUEST* r = new REQUEST;
+		REQUEST* r = new REQUEST();
+		fprintf(stderr, "r->data=%s",r->data);
 		memset(r, 0, sizeof(REQUEST));
 		char* host = inet_ntoa(addr.sin_addr);
 		fprintf(stderr, "\nget connection from %s\n", host);
@@ -49,4 +53,35 @@ socklen_t addrlen;
     }
 	CloseSocket(&server_socket);
     stopped = true;
+}
+int get_line(int sock, char *buf, int size)
+{
+ int i = 0;
+ char c = '\0';
+ int n;
+
+ while ((i < size - 1) && (c != '\n'))
+ {
+  n = recv(sock, &c, 1, 0);
+  /* DEBUG printf("%02X\n", c); */
+  if (n > 0)
+  {
+   if (c == '\r')
+   {
+    n = recv(sock, &c, 1, MSG_PEEK);
+    /* DEBUG printf("%02X\n", c); */
+    if ((n > 0) && (c == '\n'))
+     recv(sock, &c, 1, 0);
+    else
+     c = '\n';
+   }
+   buf[i] = c;
+   i++;
+  }
+  else
+   c = '\n';
+ }
+ buf[i] = '\0';
+ 
+ return(i);
 }

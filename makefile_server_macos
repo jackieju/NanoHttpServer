@@ -7,16 +7,16 @@
 CC   = g++ 
 
 CLIB_OBJ = clib/exp.o clib/thread.o clib/log.o clib/utility.o os/os.o os/LogCache.o os/ostime.o os/socket.o os/str.o os/thread-pthread.o os/osutils.o os/log.o os/CSS_LOCKEX.o os/ConfigFile.o os/protected.o os/mutex.o os/LogLevel.o 
-OBJ = $(CLIB_OBJ) main.o AbstractServer.o 
-EXEC_OBJ  =  $(OBJ) 
+OBJ = $(CLIB_OBJ) AbstractServer.o interface.o HttpServer.o
+EXEC_OBJ  =  $(OBJ)  main.o
 CGI_OBJ = $(OBJ) cgi-bin/cs_cgi.o
 #OBJ  = $(objs) $(RES)
 #OBJ  = $(objs)
 pp = cocoR1/cp.cpp
 BIN_EXEC = server
 CGI = cgi-bin/cs.cgi
-#BIN  = libSE.so.1.0
-#SOBIN=$(BIN:.so.1.0=.so)
+BIN  = libnanohttp.so.1.0
+SOBIN=$(BIN:.so.1.0=.so)
 CFLAGS = -D__SUPPORT_OBJ -g -fPIC  -D_VMMANAGER -O2 -fomit-frame-pointer -w -W -Wall -Iclib -Ios -D_MACOS -I./ -D_64
 # -Wfatal-errors
 LINK=g++ 
@@ -24,14 +24,24 @@ LFLAGS=-g
 
 .PHONY: all all-before all-after clean clean-custom
 
-all: all-before $(BIN_EXEC) all-after
+all: all-before $(BIN_EXEC) $(BIN) all-after
 
-parser: $(pp)
+lib: all-before $(BIN) all-after
+
+#parser: $(pp)
 clean: clean-custom
 	rm -f $(OBJ) $(BIN)
 	rm -f main.o
 	rm -f cgi-bin/cs_cgi.o
 DLLWRAP=g++
+
+
+HttpServer.o: HttpServer.cpp
+	$(CC) -c HttpServer.cpp -o HttpServer.o $(CFLAGS)
+
+interface.o: interface.cpp
+	$(CC) -c interface.cpp -o interface.o $(CFLAGS)
+	
 main.o: main.cpp
 	$(CC) -c main.cpp -o main.o $(CFLAGS)
 
@@ -190,3 +200,5 @@ clib/exp.o: clib/exp.cpp
 $(BIN_EXEC): $(EXEC_OBJ)
 	$(LINK) $(EXEC_OBJ) -o bin/$(BIN_EXEC) $(LFLAGS)
 
+$(BIN): $(OBJ)
+	$(DLLWRAP) -g -shared -Wl -soname=$(SOBIN)  $(OBJ)  -o ./bin/$(BIN) -lc -lcs -L.

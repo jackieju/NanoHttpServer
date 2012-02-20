@@ -6,6 +6,7 @@
 
 #include "os/osutils.h"
 #include "AbstractServer.h"
+#include "HttpServer.h"
 
 static int nport=3001;
 void applyOption(char* p1, char* p2)
@@ -15,7 +16,9 @@ void applyOption(char* p1, char* p2)
 		printf("Set port to %d", nport);
 	}
 }
-
+/*void http_handler(void *p){
+		fprintf(stderr, "http server handler");
+	}*/
 int main(int num, char** args){
 
 
@@ -40,7 +43,12 @@ int main(int num, char** args){
 		}
 			
 	} 
+
 	LOG1p("Starting server from port %d", nport);
-	AbstractServer * p = new AbstractServer();
-	p->start(nport);
+	AbstractServer * p = new AbstractServer();	p->start(nport);
+	p->addHandler(HttpServer::http_handler);
+
+
+
+		fprintf(stderr, "-->%d", p->handler_number);
 }

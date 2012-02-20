@@ -24,3 +24,10 @@ Developed by os-independent c/c++
 History:
 20110317
 Create and finish TCP layer( socket layer) programming.
+20120219
+create http server
+
+
+problem:
+post doesn't work
+
