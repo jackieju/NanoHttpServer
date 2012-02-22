@@ -1,12 +1,13 @@
 # Project: se
 
+
 #headers = $(shell echo ./*.h os/*.h)
 #srcs = $(shell echo ./*.cpp os/*.cpp)
 #objs = $(srcs:.cpp=.o)
 
 CC   = g++ 
 
-CLIB_OBJ = clib/exp.o clib/thread.o clib/log.o clib/utility.o os/os.o os/LogCache.o os/ostime.o os/socket.o os/str.o os/thread-pthread.o os/osutils.o os/log.o os/CSS_LOCKEX.o os/ConfigFile.o os/protected.o os/mutex.o os/LogLevel.o 
+CLIB_OBJ = clib/array.o clib/exp.o clib/thread.o clib/log.o clib/utility.o os/os.o os/LogCache.o os/ostime.o os/socket.o os/str.o os/thread-pthread.o os/osutils.o os/log.o os/CSS_LOCKEX.o os/ConfigFile.o os/protected.o os/mutex.o os/LogLevel.o 
 OBJ = $(CLIB_OBJ) AbstractServer.o interface.o HttpServer.o
 EXEC_OBJ  =  $(OBJ)  main.o
 CGI_OBJ = $(OBJ) cgi-bin/cs_cgi.o
@@ -34,7 +35,6 @@ clean: clean-custom
 	rm -f main.o
 	rm -f cgi-bin/cs_cgi.o
 DLLWRAP=g++
-
 
 HttpServer.o: HttpServer.cpp
 	$(CC) -c HttpServer.cpp -o HttpServer.o $(CFLAGS)
@@ -191,14 +191,15 @@ clib/utility.o: clib/utility.cpp
 	
 clib/thread.o: clib/thread.cpp
 	$(CC) -c clib/thread.cpp -o clib/thread.o $(CFLAGS)
-	
 
 clib/exp.o: clib/exp.cpp
 	$(CC) -c clib/exp.cpp -o clib/exp.o $(CFLAGS)
 
+clib/array.o: clib/array.cpp
+	$(CC) -c clib/array.cpp -o clib/array.o $(CFLAGS)
 
 $(BIN_EXEC): $(EXEC_OBJ)
 	$(LINK) $(EXEC_OBJ) -o bin/$(BIN_EXEC) $(LFLAGS)
 
 $(BIN): $(OBJ)
-	$(DLLWRAP) -g -shared -Wl -soname=$(SOBIN)  $(OBJ)  -o ./bin/$(BIN) -lc -lcs -L.
+	$(DLLWRAP) -g -shared -Wl -soname=$(SOBIN)  $(OBJ)  -o ./bin/$(BIN) -lc -lcs -L../cs/bin

@@ -45,10 +45,18 @@ int main(int num, char** args){
 	} 
 
 	LOG1p("Starting server from port %d", nport);
-	AbstractServer * p = new AbstractServer();	p->start(nport);
+/*	AbstractServer * p = new AbstractServer();	
+	p->start(nport);
 	p->addHandler(HttpServer::http_handler);
-
-
-
 		fprintf(stderr, "-->%d", p->handler_number);
+*/
+	HttpServer * server = new HttpServer();	
+		server->addHandler(HttpServer::http_handler);
+			server->addCSHandler("pattern", "className");
+	server->start(nport);
+
+
+
+
+
 }

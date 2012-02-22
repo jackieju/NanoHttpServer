@@ -26,6 +26,7 @@ int addrlen;
 socklen_t addrlen;
 #endif
 	 	 addrlen = sizeof(addr);
+		
    		 int s = accept(server_socket, (struct sockaddr *) & addr, &addrlen);
    		if (s == -1) 
 		{

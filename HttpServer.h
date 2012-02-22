@@ -1,6 +1,7 @@
 #ifndef _HTTPSERVER_NANO
 #define _HTTPSERVER_NANO
-#include "vector"
+#include "array.h"
+
 struct CSHANDLER{
 	char pattern[256];
 	char className[256];
@@ -10,13 +11,14 @@ struct CSHANDLER{
 	}
 	
 };
+
 class HttpServer:public AbstractServer{
 
-	std::vector<CSHANDLER*> cs_handler;
+	JUJU::Array cs_handler;
 public:
-
+	
 	virtual ~HttpServer(){
-			 for( vector <CSHANDLER*>::size_type i=cs_handler.size(); i>0; --i ) 
+		for( int i =0; i< cs_handler.size(); i++ ) 
     		{
 				if (cs_handler[i])
 					delete cs_handler[i];

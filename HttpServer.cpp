@@ -2,7 +2,7 @@
 #include "HttpServer.h"
 #include "cscript.h"
 
-
+extern AbstractServer* g_server;
 	 void HttpServer::http_handler(void *p){
 			REQUEST *r = (REQUEST*)p;
 			HttpServer *server = (HttpServer*)r->server;
@@ -35,7 +35,7 @@
 			
 			// call cs
 			CS* cs;
-	//cs = new CS();
+	cs = new CS();
 	char target[256] = "";
 	char * pt = (char*)path;
 	while (pt[0] == '/' && *pt != 0){
@@ -49,20 +49,39 @@
 		fprintf(stderr, "buf=%s, method=%s path=%s, target=%s\n", buf, method, path, target);
 		
 	//	cs->loadobj(target);
-		
-			 for( vector <CSHANDLER>::size_type i=server->cs_handler.size(); i>0; --i ) 
+			printf("size=%d\n", server->cs_handler.size());
+			 for( int i = 0; i < server->cs_handler.size(); i++ ) 
     		{
-				fprintf(stderr, "load object %s\n", server->cs_handler[i-1]->className);
-				char* p = server->cs_handler[i-1]->pattern;
-			//	cs->loadobj(server->cs_handler[i-1]->className, (void*)r);
+				printf("*********execute handler %d********\n", i);
+			//
+					printf("fasdjfsdaaaaa\n");
+//	fprintf(stderr, "-----> hander address = %x handler[%d] = %x\n", ((HttpServer*)g_server)->cs_handler, i, ((HttpServer*)g_server)->cs_handler[0]);
+//				fprintf(stderr, "load object %s\n", ((CSHANDLER*)server->cs_handler[i])->className);
+				//	printf("fasdjfsdaaaaa\n");
+				//char* p = ((CSHANDLER*)server->cs_handler[i])->pattern;
+				cs->loadobj(  ((CSHANDLER*)server->cs_handler[i])->className, (void*)r);
 				
     		}
+	printf("*********end execute handlers********\n");
 			OSWriteToSocket(r->socket, "hello this is NanoHttpSever\n");
 	}
+	
 	void HttpServer::addCSHandler(char* p, char* n)
 	{
+		printf("=------>0\n");
+	
+//		int a;
+//				cs_handler.add(&a);
+//	fprintf(stderr, "-----> ggg = %x, %x\n", cs_handler[0] , &a);
+//		*(cs_handler[0])= &a;
+//		fprintf(stderr, "-----> ssss = %x, %x\n", *cs_handler[0] , &a);
 		CSHANDLER *h = new CSHANDLER();
 		strcpy(h->pattern, p);
+		
 		strcpy(h->className, n);
-		cs_handler.push_back(h);
+		
+		printf("=------>1\n");
+		cs_handler.add(h);
+			printf("=------>2\n");
+		fprintf(stderr, "-----dd> address = %x handler[0] = %x\n", &cs_handler, cs_handler[0]);
 	}
