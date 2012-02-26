@@ -203,3 +203,6 @@ $(BIN_EXEC): $(EXEC_OBJ)
 
 $(BIN): $(OBJ)
 	$(DLLWRAP) -g -shared -Wl -soname=$(SOBIN)  $(OBJ)  -o ./bin/$(BIN) -lc -lcs -L../cs/bin
+
+install:
+	cp -fr bin/libnanohttp.so.1.0 /usr/lib

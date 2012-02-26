@@ -47,6 +47,8 @@ extern AbstractServer* g_server;
 		pt++;k++;
 	}
 		fprintf(stderr, "buf=%s, method=%s path=%s, target=%s\n", buf, method, path, target);
+		strcpy(r->path, path);
+		strcpy(r->method, method);
 		
 	//	cs->loadobj(target);
 			printf("size=%d\n", server->cs_handler.size());
@@ -59,6 +61,7 @@ extern AbstractServer* g_server;
 //				fprintf(stderr, "load object %s\n", ((CSHANDLER*)server->cs_handler[i])->className);
 				//	printf("fasdjfsdaaaaa\n");
 				//char* p = ((CSHANDLER*)server->cs_handler[i])->pattern;
+					printf("===>r=%x,%d", r, r);
 				cs->loadobj(  ((CSHANDLER*)server->cs_handler[i])->className, (void*)r);
 				
     		}

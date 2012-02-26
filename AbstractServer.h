@@ -23,6 +23,9 @@ struct REQUEST{
     unsigned char* data;
 	int data_len;
 	int data_used;
+				char method[100];
+			char path[256];
+			char query_string[256];
 	void setData(unsigned char* p, long len){
 		data = new unsigned char[len];
 		memset(data, 0, len);
@@ -68,8 +71,13 @@ public:
 		handler = AbstractServer::default_handler;
 		memset(hs, 0, 10);
 		handler_number = 0;
+		stopped = true;
 	}
 	virtual ~AbstractServer(){
+		stop();
+		while(!stopped){
+			JUJU::sleep(100);
+		}
 		m_StopEvent.Destroy();
 	}
 	

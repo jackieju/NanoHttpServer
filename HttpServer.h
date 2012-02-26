@@ -18,11 +18,16 @@ class HttpServer:public AbstractServer{
 public:
 	
 	virtual ~HttpServer(){
+		fprintf(stderr, "\n1\n");
+				fprintf(stderr, " handlers size %d\n", cs_handler.size());
 		for( int i =0; i< cs_handler.size(); i++ ) 
     		{
+		fprintf(stderr, "delete handler %d\n", i);
 				if (cs_handler[i])
 					delete cs_handler[i];
+				cs_handler[i] = NULL;
     		}
+			fprintf(stderr, "deleted handlers\n");
 	}
 	#define ISspace(x) isspace((int)(x))
 

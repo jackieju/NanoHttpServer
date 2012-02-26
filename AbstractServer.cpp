@@ -12,6 +12,7 @@ bool AbstractServer::start(int port){
 	}
 	LOG1p("=>create server socket, %d", server_socket);
 	fprintf(stdout, ".\n====\n");
+	stopped = false;
 	while (m_StopEvent.Wait(10) == LOCKEX_ERR_TIMEOUT)
 	{
 		fprintf(stderr, ".");
@@ -53,6 +54,7 @@ socklen_t addrlen;
         }
     }
 	CloseSocket(&server_socket);
+	LOG0("nanoserver exited");
     stopped = true;
 }
 int get_line(int sock, char *buf, int size)

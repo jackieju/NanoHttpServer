@@ -1,2 +1,4 @@
 create_server 1
 addHandler 3
+destroy_server 1
+request_path 1
